@@ -1,0 +1,33 @@
+/** @format */
+
+.tile img {
+  width: 100%;
+  display: block;
+  border: 8px solid blue;
+}
+.img :hover {
+  background-color: red;
+}
+.title .f {
+  transform: rotateY(100deg);
+  transition: all ease-in 0.5s;
+  position: absolute;
+}
+
+.title {
+  position: relative;
+}
+
+.Flipped .f {
+  transform: rotateY(0deg);
+  transition-delay: 0.5s;
+}
+.Flipped .bg {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
+}
+
+.title .bg {
+  transition: all ease-in 0.5s;
+  transition-delay: 0.5s;
+}
