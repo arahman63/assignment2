@@ -1,17 +1,21 @@
 /** @format */
 
-import { disabled } from "express/lib/application";
 import "./Title.css";
 
-export default function title({ title, handleState, flipState, disabled }) {
+export default function Title({ title, handleChoice, flipped, disabled }) {
   const handleClick = () => {
-    if (!disabled) handleState(title);
+    if (!disabled) handleChoice(title);
   };
   return (
     <div className="title">
-      <div className={flipState ? "Flipped" : ""}>
-        <img className="f" src={title.src} />
-        <img className="bg" src="/images/bg.jpg" onClick={handleClick} />
+      <div className={flipped ? "flipped" : ""}>
+        <img className="f" src={title.src} alt="f" />
+        <img
+          className="bg"
+          src="/images/bg.jpg"
+          onClick={handleClick}
+          alt="bg"
+        />
       </div>
     </div>
   );
