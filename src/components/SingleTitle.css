@@ -15,23 +15,23 @@
   background-color: pink;
 }
 
-.tile .f {
+.tile .front {
   transform: rotateY(90deg);
   transition: all ease-in 0.3s;
   position: absolute;
 }
 
-.flipped .f {
+.flipped .front {
   transform: rotateY(0deg);
   transition-delay: 0.3s;
 }
 
-.tile .bg {
+.tile .back {
   transition: all ease-in 0.2s;
   transition-delay: 0.3s;
 }
 
-.flipped .bg {
+.flipped .back {
   transform: rotateY(90deg);
   transition-delay: 0s;
 }

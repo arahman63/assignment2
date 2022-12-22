@@ -1,9 +1,9 @@
 /** @format */
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import Title from "./components/Title";
+import SingleTitle from "./components/SingleTitle";
 
-const TitleImages = [
+const titleImages = [
   { src: "/images/chicken.jpg", matched: false },
   { src: "/images/bird.jpg", matched: false },
   { src: "/images/cow.png", matched: false },
@@ -13,62 +13,69 @@ const TitleImages = [
 ];
 
 function App() {
-  const [titles, setTitles] = useState([]);
-  const [firstChoice, setFirstChoice] = useState(null);
-  const [secondChoice, setSecondChoice] = useState(null);
+  const [tiles, setTiles] = useState([]);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-  const shuffleTitles = () => {
-    const shuffleTitles = [...TitleImages, ...TitleImages]
-      //creates shuffled array
+  // shuffle card functionality
+  const shuffleTiles = () => {
+    // creates 12 tiles
+    const shuffleTiles = [...titleImages, ...titleImages]
+      // end result will be a shuffled array
       .sort(() => Math.random() - 0.5)
-      //card contains a id prop
-      .map((title) => ({ ...title, id: Math.random() }));
-    setTitles(shuffleTitles);
+      // each card will have an id property
+      .map((tile) => ({ ...tile, id: Math.random() }));
+
+    setTiles(shuffleTiles);
   };
 
-  //handle the first and second choice
-  const handleChoice = (title) => {
-    firstChoice ? setSecondChoice(title) : setFirstChoice(title);
+  // handling choices
+  const handleChoice = (tile) => {
+    choiceOne ? setChoiceTwo(tile) : setChoiceOne(tile);
   };
+
+  // comparing the 2 clicked tiles
   useEffect(() => {
-    if (firstChoice && secondChoice) {
+    if (choiceOne && choiceTwo) {
       setDisabled(true);
-      if (firstChoice.src === secondChoice.src) {
-        setTitles((previousTitles) => {
-          return previousTitles.map((title) => {
-            if (title.src === firstChoice.src) {
-              return { ...title, matched: true };
+      if (choiceOne.src === choiceTwo.src) {
+        setTiles((prevTiles) => {
+          return prevTiles.map((tile) => {
+            if (tile.src === choiceOne.src) {
+              return { ...tile, matched: true };
             } else {
-              return title;
+              return tile;
             }
           });
         });
+
         resetTries();
       } else {
         setTimeout(() => resetTries(), 1500);
       }
     }
-  }, [firstChoice, secondChoice]);
+  }, [choiceOne, choiceTwo]);
+
+  //resetting and incrementing the tries
   const resetTries = () => {
-    setFirstChoice(null);
-    setSecondChoice(null);
+    setChoiceOne(null);
+    setChoiceTwo(null);
     setDisabled(false);
   };
+
   return (
     <div className="App">
       <h1>Memory Game</h1>
-      <button onClick={shuffleTitles}>New Game</button>
-      
-      <div className="title-grid">
-        {titles.map((title) => (
-          <Title
-            key={title.id}
-            title={title}
+      <button onClick={shuffleTiles}>New Game</button>
+
+      <div className="tile-grid">
+        {tiles.map((tile) => (
+          <SingleTitle
+            key={tile.id}
+            tile={tile}
             handleChoice={handleChoice}
-            flipState={
-              title === firstChoice || title === secondChoice || title.matched
-            }
+            flipped={tile === choiceOne || tile === choiceTwo || tile.matched}
             disabled={disabled}
           />
         ))}
@@ -76,4 +83,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
